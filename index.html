@@ -24,6 +24,16 @@
     padding:7px 13px;border-radius:30px;cursor:pointer;letter-spacing:1px}
   .lang button[aria-pressed="true"]{background:var(--sun);color:var(--ink)}
 
+  /* BOTTOM NAV */
+  .bottom-nav{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:60;
+    display:flex;gap:4px;background:rgba(21,21,42,.85);backdrop-filter:blur(8px);
+    padding:6px;border-radius:30px;border:2px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  .bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:2px;
+    color:#fff;text-decoration:none;font-family:"Bungee";font-size:.55rem;
+    padding:8px 14px;border-radius:22px;transition:background .2s,color .2s}
+  .bottom-nav a .ic{font-size:1.25rem;line-height:1}
+  .bottom-nav a.active{background:var(--sun);color:var(--ink)}
+
   /* COUNTDOWN */
   .countdown{
     background:var(--ink);border-bottom:8px solid var(--sun);
@@ -118,7 +128,7 @@
   .level .mission{margin-top:10px;font-weight:800;font-size:.85rem;color:var(--brick)}
 
   /* FOOTER */
-  footer{background:var(--ink);color:#fff;text-align:center;padding:48px 20px}
+  footer{background:var(--ink);color:#fff;text-align:center;padding:48px 20px 110px}
   footer .bee-mini{font-size:2rem}
   footer h2{font-family:"Bungee";font-size:clamp(1.4rem,5vw,2rem);margin:10px 0;color:var(--sun)}
   footer p{font-weight:700;max-width:520px;margin:0 auto;opacity:.9}
@@ -138,14 +148,15 @@
   <button id="btn-de" aria-pressed="false" onclick="setLang('de')">DE</button>
 </div>
 
-<!-- COUNTDOWN -->
-<div class="countdown">
-  <div class="label" id="cd-label" data-i18n="cd-label">FALTAN PARA LA AVENTURA</div>
-  <div id="cd-display"></div>
-</div>
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" aria-label="Navegación rápida">
+  <a href="#top" class="nav-link active"><span class="ic">🐝</span><span data-i18n="nav-top">Inicio</span></a>
+  <a href="#botin" class="nav-link"><span class="ic">💷</span><span data-i18n="nav-botin">Botín</span></a>
+  <a href="#mapa" class="nav-link"><span class="ic">🗺️</span><span data-i18n="nav-mapa">Mapa</span></a>
+</nav>
 
 <!-- HERO -->
-<header class="hero">
+<header class="hero" id="top">
   <span class="float f1">⚙️</span><span class="float f2">🎶</span><span class="float f3">🎸</span>
   <span class="float f4">❄️</span><span class="float f5">🔬</span>
   <div class="wrap">
@@ -176,8 +187,14 @@
   </div>
 </header>
 
+<!-- COUNTDOWN -->
+<div class="countdown">
+  <div class="label" id="cd-label" data-i18n="cd-label">FALTAN PARA LA AVENTURA</div>
+  <div id="cd-display"></div>
+</div>
+
 <!-- SCRATCH CARDS -->
-<section class="panel">
+<section class="panel" id="botin">
   <div class="wrap">
     <div class="section-head">
       <span class="kicker" data-i18n="kit-kicker">EL KIT DE NANA 💜</span>
@@ -209,7 +226,7 @@
 </section>
 
 <!-- LEVELS -->
-<section style="background:var(--snow)">
+<section style="background:var(--snow)" id="mapa">
   <div class="wrap">
     <div class="section-head">
       <span class="kicker" data-i18n="lvl-kicker">ESTACIONES DE LA AVENTURA</span>
@@ -272,6 +289,7 @@ const I18N = {
     eyebrow:"★ PASAPORTE DE AVENTURA ★", hi:"¡Feliz Cumple!",
     sub:"Tu pasaporte para conquistar Mánchester este verano. Tres idiomas, una misión, una ciudad llena de música, ciencia y nieve. 🐝",
     spotify:"La banda sonora del viaje",
+    "nav-top":"Inicio","nav-botin":"Botín","nav-mapa":"Mapa",
     "kit-kicker":"EL KIT DE NANA 💜","kit-title":"💷 Raspa para descubrir tu presupuesto",
     "kit-sub":"Tres misiones de compras con libras de verdad. Pasa el dedo (o el mouse) sobre cada tarjeta dorada.",
     spend:"PARA GASTAR", reveal:"Revelar sin raspar",
@@ -303,6 +321,7 @@ const I18N = {
     eyebrow:"★ ABENTEUER-REISEPASS ★", hi:"Alles Gute zum Geburtstag!",
     sub:"Dein Reisepass, um Manchester diesen Sommer zu erobern. Drei Sprachen, eine Mission, eine Stadt voller Musik, Wissenschaft und Schnee. 🐝",
     spotify:"Der Soundtrack der Reise",
+    "nav-top":"Start","nav-botin":"Budget","nav-mapa":"Karte",
     "kit-kicker":"NANAS KIT 💜","kit-title":"💷 Rubbel frei und entdecke dein Budget",
     "kit-sub":"Drei Einkaufs-Missionen mit echten Pfund. Wisch mit dem Finger über jede goldene Karte.",
     spend:"ZUM AUSGEBEN", reveal:"Ohne Rubbeln zeigen",
@@ -502,6 +521,26 @@ document.querySelectorAll(".scratch-zone").forEach(zone=>{
   canvas.addEventListener("touchend",   ()=>drawing=false);
   zone.closest(".card").querySelector(".reveal-btn").addEventListener("click", reveal);
   scratchers.push(state);
+});
+
+/* ====================================================
+   SCROLLSPY — resalta la parada activa de la nav inferior
+   ==================================================== */
+const navLinks = {};
+document.querySelectorAll(".nav-link").forEach(a=>{
+  navLinks[a.getAttribute("href").slice(1)] = a;
+});
+const spy = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      Object.values(navLinks).forEach(a=>a.classList.remove("active"));
+      navLinks[entry.target.id]?.classList.add("active");
+    }
+  });
+}, {rootMargin:"-35% 0px -55% 0px", threshold:0});
+["top","botin","mapa"].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el) spy.observe(el);
 });
 </script>
 </body>
