@@ -1,178 +1,508 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Feliz Cumpleaños! Misión Manchester</title>
-    <style>
-        :root {
-            --manc-yellow: #FFC107;
-            --manc-dark: #1A1A1A;
-            --manc-brick: #E64A19;
-            --manc-blue: #29B6F6;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--manc-dark);
-            color: #FFFFFF;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .card {
-            background: linear-gradient(135deg, #2A2A2A 0%, #111111 100%);
-            border: 4px solid var(--manc-yellow);
-            border-radius: 20px;
-            max-width: 450px;
-            width: 100%;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .bee-badge {
-            font-size: 40px;
-            animation: float 3s ease-in-out infinite;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        h1 {
-            color: var(--manc-yellow);
-            margin: 10px 0;
-            font-size: 28px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .flags {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        .intro {
-            font-size: 16px;
-            line-height: 1.5;
-            color: #E0E0E0;
-            margin-bottom: 25px;
-        }
-        .mission-box {
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 4px solid var(--manc-blue);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .mission-box:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.02);
-        }
-        .mission-title {
-            font-weight: bold;
-            color: var(--manc-yellow);
-            margin-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .mission-details {
-            display: none;
-            font-size: 14px;
-            color: #B0B0B0;
-            margin-top: 10px;
-            line-height: 1.4;
-        }
-        .active .mission-details {
-            display: block;
-        }
-        .footer-note {
-            margin-top: 30px;
-            font-size: 13px;
-            color: #888;
-            border-top: 1px solid #333;
-            padding-top: 15px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Pasaporte Manchester de Massimo 💛</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brick:#C8442A;--sky:#1B9AED;--sun:#FFC93C;--neon:#FF2D7E;
+    --ink:#15152A;--snow:#FFF8EE;--mint:#2FD08A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Nunito",system-ui,sans-serif;background:var(--ink);color:var(--ink);overflow-x:hidden}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+
+  /* LANG TOGGLE */
+  .lang{position:fixed;top:14px;right:14px;z-index:50;display:flex;gap:4px;
+    background:rgba(21,21,42,.75);backdrop-filter:blur(6px);padding:5px;border-radius:40px;border:2px solid #fff}
+  .lang button{font-family:"Bungee";font-size:.7rem;color:#fff;background:none;border:none;
+    padding:7px 13px;border-radius:30px;cursor:pointer;letter-spacing:1px}
+  .lang button[aria-pressed="true"]{background:var(--sun);color:var(--ink)}
+
+  /* COUNTDOWN */
+  .countdown{
+    background:var(--ink);border-bottom:8px solid var(--sun);
+    padding:28px 20px;text-align:center;
+  }
+  .countdown .label{font-family:"Bungee";color:var(--sun);font-size:.8rem;letter-spacing:2px;margin-bottom:12px}
+  .cd-grid{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+  .cd-block{background:#fff;border:4px solid var(--sun);border-radius:16px;
+    min-width:72px;padding:10px 14px;box-shadow:0 6px 0 var(--sun)}
+  .cd-block .num{font-family:"Bungee";font-size:2.2rem;color:var(--ink);line-height:1;display:block}
+  .cd-block .unit{font-weight:900;font-size:.65rem;letter-spacing:1px;color:#666;text-transform:uppercase}
+  .cd-done{font-family:"Bungee";font-size:1.6rem;color:var(--sun)}
+
+  /* HERO */
+  header.hero{position:relative;padding:64px 20px 90px;text-align:center;overflow:hidden;
+    background:radial-gradient(120% 90% at 50% -10%,#2bb0ff 0%,var(--sky) 45%,#0d6fb5 100%);
+    border-bottom:8px solid var(--ink)}
+  .float{position:absolute;font-size:34px;opacity:.85;animation:drift 9s ease-in-out infinite;
+    user-select:none;pointer-events:none}
+  .float.f1{top:12%;left:8%}.float.f2{top:24%;right:10%;animation-delay:-2s}
+  .float.f3{top:60%;left:6%;animation-delay:-4s}.float.f4{top:68%;right:8%;animation-delay:-1s}
+  .float.f5{top:40%;left:46%;animation-delay:-3s;font-size:24px}
+  @keyframes drift{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-18px) rotate(8deg)}}
+  .eyebrow{display:inline-block;font-family:"Bungee";font-size:.8rem;letter-spacing:2px;
+    color:var(--ink);background:var(--sun);padding:8px 16px;border-radius:40px;
+    box-shadow:0 4px 0 rgba(0,0,0,.25);transform:rotate(-2deg);margin-bottom:22px}
+  .hero h1{font-family:"Bungee";color:#fff;line-height:1.05;font-size:clamp(2.4rem,8vw,5rem);
+    text-shadow:0 6px 0 var(--ink),0 6px 18px rgba(0,0,0,.4);margin-bottom:6px}
+  .hero h1 .name{color:var(--sun);display:block}
+  .hero .sub{color:#fff;font-weight:800;font-size:clamp(1rem,3vw,1.35rem);max-width:560px;
+    margin:18px auto 0;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+  .flags{margin-top:18px;font-size:1.8rem;letter-spacing:6px}
+  .spotify{display:inline-flex;align-items:center;gap:10px;margin-top:22px;
+    background:#1DB954;color:#fff;font-family:"Bungee";font-size:.78rem;letter-spacing:.5px;
+    text-decoration:none;padding:12px 20px;border-radius:40px;border:3px solid #fff;
+    box-shadow:0 5px 0 rgba(0,0,0,.3);transition:transform .15s ease,box-shadow .15s ease}
+  .spotify:hover,.spotify:focus-visible{transform:translateY(-2px);box-shadow:0 7px 0 rgba(0,0,0,.3)}
+  .spotify:active{transform:translateY(1px);box-shadow:0 3px 0 rgba(0,0,0,.3)}
+  .spotify svg{width:22px;height:22px;flex:0 0 auto}
+  .bee{width:128px;height:128px;margin:8px auto 4px;display:block;
+    animation:buzz 4s ease-in-out infinite;filter:drop-shadow(0 8px 10px rgba(0,0,0,.35))}
+  @keyframes buzz{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+  .ai-cover{display:block;width:100%;max-width:560px;margin:30px auto 0;
+    border-radius:18px;border:5px solid #fff;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+
+  /* SECTIONS */
+  section{padding:64px 0}
+  .panel{background:var(--snow);border-radius:28px 28px 0 0}
+  .section-head{text-align:center;margin-bottom:38px}
+  .section-head .kicker{font-family:"Bungee";color:var(--neon);font-size:.85rem;letter-spacing:1.5px}
+  .section-head h2{font-family:"Bungee";font-size:clamp(1.6rem,5vw,2.4rem);color:var(--ink);margin-top:8px}
+  .section-head p{max-width:560px;margin:14px auto 0;font-weight:700;color:#444}
+
+  /* SCRATCH CARDS */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+  .card{background:#fff;border:4px solid var(--ink);border-radius:20px;
+    padding:18px;box-shadow:0 10px 0 var(--ink);text-align:center;transition:transform .2s}
+  .card.scratched{border-color:var(--mint);box-shadow:0 10px 0 var(--mint)}
+  .card .place{font-family:"Bungee";font-size:1rem;color:var(--brick);
+    min-height:2.4em;display:flex;align-items:center;justify-content:center}
+  .card .why{font-weight:700;font-size:.85rem;color:#555;margin-top:6px}
+  .scratch-zone{position:relative;width:100%;height:130px;margin:14px 0 6px;border-radius:14px;overflow:hidden}
+  .prize{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;background:linear-gradient(135deg,var(--sun),#ffb300);color:var(--ink)}
+  .prize .amount{font-family:"Bungee";font-size:2.4rem;line-height:1}
+  .prize .label{font-weight:900;font-size:.8rem;letter-spacing:1px;margin-top:4px}
+  .scratch-zone canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:none}
+  .scratch-zone canvas:active{cursor:grabbing}
+  .reveal-btn{background:none;border:none;font-family:"Nunito";font-weight:900;
+    color:var(--sky);text-decoration:underline;cursor:pointer;font-size:.8rem;padding:4px}
+  .total{text-align:center;margin-top:30px;font-family:"Bungee";color:var(--ink);font-size:1.2rem}
+  .total span{color:var(--mint)}
+
+  /* CONFETTI OVERLAY */
+  #confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:999;display:none}
+
+  /* LEVELS */
+  .levels{display:flex;flex-direction:column;gap:30px;max-width:680px;margin:0 auto}
+  .level{display:flex;gap:18px;align-items:flex-start;background:#fff;border:4px solid var(--ink);
+    border-radius:22px;padding:20px;box-shadow:0 9px 0 var(--ink);
+    transition:transform .15s ease,box-shadow .15s ease}
+  .level:hover,.level:focus-within{transform:translate(-2px,-3px);box-shadow:0 13px 0 var(--ink)}
+  .level:nth-child(even){flex-direction:row-reverse;text-align:right}
+  .badge{flex:0 0 auto;width:64px;height:64px;border-radius:18px;display:flex;align-items:center;
+    justify-content:center;font-size:2rem;border:4px solid var(--ink)}
+  .lvl1 .badge{background:var(--neon)}.lvl2 .badge{background:var(--sky)}.lvl3 .badge{background:#7ad0ff}
+  .level .num{font-family:"Bungee";font-size:.75rem;color:var(--brick);letter-spacing:1px}
+  .level h3{font-family:"Bungee";font-size:1.05rem;color:var(--ink);margin:4px 0 8px}
+  .level .spot{display:inline-block;font-weight:900;font-size:.78rem;background:var(--ink);
+    color:#fff;padding:3px 10px;border-radius:30px;margin-bottom:8px}
+  .level p{font-weight:700;font-size:.9rem;color:#444;line-height:1.45}
+  .level .mission{margin-top:10px;font-weight:800;font-size:.85rem;color:var(--brick)}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:#fff;text-align:center;padding:48px 20px}
+  footer .bee-mini{font-size:2rem}
+  footer h2{font-family:"Bungee";font-size:clamp(1.4rem,5vw,2rem);margin:10px 0;color:var(--sun)}
+  footer p{font-weight:700;max-width:520px;margin:0 auto;opacity:.9}
+  footer .sign{margin-top:18px;font-family:"Bungee";font-size:.85rem}
+
+  a:focus-visible,button:focus-visible,canvas:focus-visible{outline:3px solid var(--neon);outline-offset:3px}
+  @media(prefers-reduced-motion:reduce){.float,.bee{animation:none}*{scroll-behavior:auto}}
+</style>
 </head>
 <body>
 
-<div class="card">
-    <div class="bee-badge">🐝🎧🎸</div>
-    <h1>¡Feliz Cumpleaños!</h1>
-    <div class="flags">🇨🇱 ➔ 🇩🇪 ➔ 🇬🇧</div>
-    
-    <p class="intro">
-        ¡Tu regalo de cumpleaños es una aventura musical y de exploración este verano en Mánchester! Tienes <strong>£120 libras</strong> para completar estas misiones con tus papás. 
-        <br><br>
-        👇 <em>Toca cada nivel para desbloquear la misión secreta:</em>
-    </p>
+<canvas id="confetti-canvas"></canvas>
 
-    <!-- NIVEL 1 -->
-    <div class="mission-box" onclick="toggleMission(this)">
-        <div class="mission-title">
-            <span>🛍️ Nivel 1: Cacería de Chinches</span>
-            <span>£40</span>
-        </div>
-        <div class="mission-details">
-            <strong>Lugar: Afflecks Palace.</strong> <br>
-            Explora los 4 pisos de esta fortaleza alternativa. Tu misión es gastar estas libras en stickers de bandas, pines de la abeja obrera, parches para tu mochila o juguetes retro.
-        </div>
-    </div>
-
-    <!-- NIVEL 2 -->
-    <div class="mission-box" onclick="toggleMission(this)">
-        <div class="mission-title">
-            <span>💿 Nivel 2: Tu Primer Vinilo</span>
-            <span>£25</span>
-        </div>
-        <div class="mission-details">
-            <strong>Lugar: Piccadilly Records.</strong> <br>
-            Entra a la disquería más cool de la ciudad. Busca entre los estantes y elige el disco que tenga la portada más increíble para llevarlo de trofeo a tu pieza.
-        </div>
-    </div>
-
-    <!-- NIVEL 3 -->
-    <div class="mission-box" onclick="toggleMission(this)">
-        <div class="mission-title">
-            <span>🍔 Nivel 3: El Banquete Rockero</span>
-            <span>£55</span>
-        </div>
-        <div class="mission-details">
-            <strong>Lugar: Mackie Mayor / Hard Rock Cafe.</strong> <br>
-            Invita a tus papás a comer unas buenas hamburguesas bajo el techo de vidrio gigante de Mackie Mayor para recargar energías con buena música de fondo.
-        </div>
-    </div>
-
-    <!-- NIVEL EXTRA -->
-    <div class="mission-box" style="border-left-color: var(--manc-brick);" onclick="toggleMission(this)">
-        <div class="mission-title">
-            <span>🚀 Estaciones de Aventura Extra</span>
-            <span>✨</span>
-        </div>
-        <div class="mission-details">
-            Si yo viajara con ustedes, iríamos directo a desafiar la ciencia en el <strong>Science and Industry Museum</strong>, a caminar por el techo en el <strong>Museum of Illusions</strong> y a lanzarnos en donas gigantes en la nieve real de <strong>Chill Factore</strong>. ¡No dejes de ir con tus papás!
-        </div>
-    </div>
-
-    <div class="footer-note">
-        Escucha la playlist oficial en Spotify que preparé para tus caminatas de julio. <br>
-        <strong>¡Te ama, tu tía! ❤️</strong>
-    </div>
+<!-- LANG TOGGLE -->
+<div class="lang" role="group" aria-label="Idioma / Sprache">
+  <button id="btn-es" aria-pressed="true" onclick="setLang('es')">ES</button>
+  <button id="btn-de" aria-pressed="false" onclick="setLang('de')">DE</button>
 </div>
 
-<script>
-    function toggleMission(element) {
-        element.classList.toggle('active');
-    }
-</script>
+<!-- COUNTDOWN -->
+<div class="countdown">
+  <div class="label" id="cd-label" data-i18n="cd-label">FALTAN PARA LA AVENTURA</div>
+  <div id="cd-display"></div>
+</div>
 
+<!-- HERO -->
+<header class="hero">
+  <span class="float f1">⚙️</span><span class="float f2">🎶</span><span class="float f3">🎸</span>
+  <span class="float f4">❄️</span><span class="float f5">🔬</span>
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="eyebrow">★ PASAPORTE DE AVENTURA ★</span>
+    <svg class="bee" viewBox="0 0 120 120" role="img" aria-label="Manchester bee">
+      <ellipse cx="60" cy="74" rx="26" ry="30" fill="#FFC93C" stroke="#15152A" stroke-width="5"/>
+      <path d="M34 64h52M34 78h52M37 92h46" stroke="#15152A" stroke-width="6" stroke-linecap="round"/>
+      <ellipse cx="40" cy="58" rx="22" ry="13" fill="#fff" opacity=".85" stroke="#15152A" stroke-width="3" transform="rotate(-25 40 58)"/>
+      <ellipse cx="80" cy="58" rx="22" ry="13" fill="#fff" opacity=".85" stroke="#15152A" stroke-width="3" transform="rotate(25 80 58)"/>
+      <circle cx="60" cy="40" r="20" fill="#15152A"/>
+      <circle cx="53" cy="38" r="4" fill="#fff"/><circle cx="67" cy="38" r="4" fill="#fff"/>
+      <path d="M40 36a20 20 0 0 1 40 0" fill="none" stroke="#FF2D7E" stroke-width="5"/>
+      <rect x="34" y="32" width="9" height="14" rx="4" fill="#FF2D7E" stroke="#15152A" stroke-width="2"/>
+      <rect x="77" y="32" width="9" height="14" rx="4" fill="#FF2D7E" stroke="#15152A" stroke-width="2"/>
+      <path d="M52 22l4-8 4 8M60 22l4-8 4 8" fill="none" stroke="#FFC93C" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <h1><span data-i18n="hi">¡Feliz Cumple!</span><span class="name">Massimo 💛</span></h1>
+    <p class="sub" data-i18n="sub">Tu pasaporte para conquistar Mánchester este verano. Tres idiomas, una misión, una ciudad llena de música, ciencia y nieve. 🐝</p>
+    <div class="flags" aria-label="Chile, Deutschland, United Kingdom">🇨🇱 🇩🇪 🇬🇧</div>
+    <div>
+      <a class="spotify" href="https://open.spotify.com/playlist/0hrKkIbpIDUodXCpssasUt"
+         target="_blank" rel="noopener noreferrer" data-i18n-aria="spotify-aria">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.84.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.1 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.32-1.32 11.34-1.02 15.66 1.5.54.3.72 1.02.42 1.56-.3.42-1.02.6-1.56.3z"/></svg>
+        <span data-i18n="spotify">La banda sonora del viaje</span>
+      </a>
+    </div>
+    <img class="ai-cover" src="portada.png" alt="Portada Manchester" onerror="this.style.display='none'">
+  </div>
+</header>
+
+<!-- SCRATCH CARDS -->
+<section class="panel">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker" data-i18n="kit-kicker">EL KIT DE NANA 💜</span>
+      <h2 data-i18n="kit-title">💷 Raspa para descubrir tu presupuesto</h2>
+      <p data-i18n="kit-sub">Tres misiones de compras con libras de verdad. Pasa el dedo (o el mouse) sobre cada tarjeta dorada.</p>
+    </div>
+    <div class="cards" id="cards">
+      <div class="card">
+        <div class="place">Afflecks</div>
+        <div class="scratch-zone"><div class="prize"><span class="amount">£40</span><span class="label" data-i18n="spend">PARA GASTAR</span></div></div>
+        <button class="reveal-btn" data-i18n="reveal">Revelar sin raspar</button>
+        <div class="why" data-i18n="why1">El templo alternativo: ropa, pins y rarezas hechas en Mánchester.</div>
+      </div>
+      <div class="card">
+        <div class="place">Piccadilly Records</div>
+        <div class="scratch-zone"><div class="prize"><span class="amount">£25</span><span class="label" data-i18n="spend">PARA GASTAR</span></div></div>
+        <button class="reveal-btn" data-i18n="reveal">Revelar sin raspar</button>
+        <div class="why" data-i18n="why2">Vinilos y música: la banda sonora de tu aventura.</div>
+      </div>
+      <div class="card">
+        <div class="place">Mackie Mayor</div>
+        <div class="scratch-zone"><div class="prize"><span class="amount">£55</span><span class="label" data-i18n="spend">PARA GASTAR</span></div></div>
+        <button class="reveal-btn" data-i18n="reveal">Revelar sin raspar</button>
+        <div class="why" data-i18n="why3">Mercado gastronómico en un mercado victoriano restaurado. ¡A comer!</div>
+      </div>
+    </div>
+    <p class="total" data-i18n="total">Botín total de la misión: <span>£120</span> 🪙</p>
+  </div>
+</section>
+
+<!-- LEVELS -->
+<section style="background:var(--snow)">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker" data-i18n="lvl-kicker">ESTACIONES DE LA AVENTURA</span>
+      <h2 data-i18n="lvl-title">🗺️ Tus 3 niveles en Mánchester</h2>
+      <p data-i18n="lvl-sub">Completa cada nivel para ganar el título de Héroe Trilingüe. ¡Que comience el juego!</p>
+    </div>
+    <div class="levels">
+      <div class="level lvl1" tabindex="0">
+        <div class="badge">🔬</div>
+        <div>
+          <span class="num" data-i18n="n1">NIVEL 1</span>
+          <h3 data-i18n="t1">El Laboratorio del Científico Loco</h3>
+          <span class="spot">Science and Industry Museum</span>
+          <p data-i18n="p1">Sube a la sala <strong>Experiment</strong>. Levanta un auto con una sola mano usando poleas y juega con la electricidad.</p>
+          <p class="mission" data-i18n="m1">🎯 Misión: mover algo gigante con pura física.</p>
+        </div>
+      </div>
+      <div class="level lvl2" tabindex="0">
+        <div class="badge">🪞</div>
+        <div>
+          <span class="num" data-i18n="n2">NIVEL 2</span>
+          <h3 data-i18n="t2">El Desafío de la Gravedad y los Espejos</h3>
+          <span class="spot">Museum of Illusions</span>
+          <p data-i18n="p2">Techos que son pisos, cuartos que encogen y espejos imposibles.</p>
+          <p class="mission" data-i18n="m2">🎯 Misión: una foto caminando por el techo.</p>
+        </div>
+      </div>
+      <div class="level lvl3" tabindex="0">
+        <div class="badge">⛷️</div>
+        <div>
+          <span class="num" data-i18n="n3">NIVEL 3</span>
+          <h3 data-i18n="t3">Invierno en pleno Julio</h3>
+          <span class="spot">Chill Factore</span>
+          <p data-i18n="p3">Cambia los shorts por ropa de nieve y deslízate por la pista de hielo real más larga del Reino Unido.</p>
+          <p class="mission" data-i18n="m3">🎯 Misión: bajar en las donas gigantes (tubing) sin gritar… o gritando.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="bee-mini">🐝</div>
+  <h2 data-i18n="foot-h">¡Que comience la aventura, Massimo! 💛</h2>
+  <p data-i18n="foot-p">Un héroe trilingüe que ama la música y el fútbol merece una aventura a su altura. Mánchester te espera. ⚽🎸</p>
+  <p class="sign" data-i18n="foot-sign">Con todo el cariño, Nana 💜</p>
+</footer>
+
+<script>
+/* ====================================================
+   TRADUCCIONES
+   ==================================================== */
+const I18N = {
+  es:{
+    title:"El Pasaporte Manchester de Massimo 💛",
+    "cd-label":"FALTAN PARA LA AVENTURA",
+    "cd-days":"días","cd-hours":"horas","cd-min":"min","cd-sec":"seg",
+    "cd-done":"🎂 Hoy cumples años y cómo no estoy ahí para darte el abrazo que te debo, este pasaporte es mi forma de estar contigo y regalarte una bonita experiencia en tu viaje a Manchester. Te quiero muchísimo, Massimo. 💛",
+    eyebrow:"★ PASAPORTE DE AVENTURA ★", hi:"¡Feliz Cumple!",
+    sub:"Tu pasaporte para conquistar Mánchester este verano. Tres idiomas, una misión, una ciudad llena de música, ciencia y nieve. 🐝",
+    spotify:"La banda sonora del viaje",
+    "kit-kicker":"EL KIT DE NANA 💜","kit-title":"💷 Raspa para descubrir tu presupuesto",
+    "kit-sub":"Tres misiones de compras con libras de verdad. Pasa el dedo (o el mouse) sobre cada tarjeta dorada.",
+    spend:"PARA GASTAR", reveal:"Revelar sin raspar",
+    why1:"El templo alternativo: ropa, pins y rarezas hechas en Mánchester.",
+    why2:"Vinilos y música: la banda sonora de tu aventura.",
+    why3:"Mercado gastronómico en un mercado victoriano restaurado. ¡A comer!",
+    total:'Botín total de la misión: <span>£120</span> 🪙',
+    "lvl-kicker":"ESTACIONES DE LA AVENTURA","lvl-title":"🗺️ Tus 3 niveles en Mánchester",
+    "lvl-sub":"Completa cada nivel para ganar el título de Héroe Trilingüe. ¡Que comience el juego!",
+    n1:"NIVEL 1",t1:"El Laboratorio del Científico Loco",
+    p1:"Sube a la sala <strong>Experiment</strong>. Levanta un auto con una sola mano usando poleas y juega con la electricidad.",
+    m1:"🎯 Misión: mover algo gigante con pura física.",
+    n2:"NIVEL 2",t2:"El Desafío de la Gravedad y los Espejos",
+    p2:"Techos que son pisos, cuartos que encogen y espejos imposibles.",
+    m2:"🎯 Misión: una foto caminando por el techo.",
+    n3:"NIVEL 3",t3:"Invierno en pleno Julio",
+    p3:"Cambia los shorts por ropa de nieve y deslízate por la pista de hielo real más larga del Reino Unido.",
+    m3:"🎯 Misión: bajar en las donas gigantes (tubing) sin gritar… o gritando.",
+    "foot-h":"¡Que comience la aventura, Massimo! 💛",
+    "foot-p":"Un héroe trilingüe que ama la música y el fútbol merece una aventura a su altura. Mánchester te espera. ⚽🎸",
+    "foot-sign":"Con todo el cariño, Nana 💜",
+    scratch:"🪙 RASPA AQUÍ"
+  },
+  de:{
+    title:"Massimos Manchester-Reisepass 💛",
+    "cd-label":"NOCH BIS ZUM ABENTEUER",
+    "cd-days":"Tage","cd-hours":"Std","cd-min":"Min","cd-sec":"Sek",
+    "cd-done":"🎂 Heute hast du Geburtstag und weil ich nicht da bin, um dir die Umarmung zu geben, die ich dir schulde, ist dieser Reisepass meine Art, bei dir zu sein und dir ein schönes Erlebnis auf deiner Reise nach Manchester zu schenken. Ich hab dich so lieb, Massimo. 💛",
+    eyebrow:"★ ABENTEUER-REISEPASS ★", hi:"Alles Gute zum Geburtstag!",
+    sub:"Dein Reisepass, um Manchester diesen Sommer zu erobern. Drei Sprachen, eine Mission, eine Stadt voller Musik, Wissenschaft und Schnee. 🐝",
+    spotify:"Der Soundtrack der Reise",
+    "kit-kicker":"NANAS KIT 💜","kit-title":"💷 Rubbel frei und entdecke dein Budget",
+    "kit-sub":"Drei Einkaufs-Missionen mit echten Pfund. Wisch mit dem Finger über jede goldene Karte.",
+    spend:"ZUM AUSGEBEN", reveal:"Ohne Rubbeln zeigen",
+    why1:"Der alternative Tempel: Klamotten, Pins und Kuriositäten aus Manchester.",
+    why2:"Schallplatten und Musik: der Soundtrack deines Abenteuers.",
+    why3:"Food-Markt in einer restaurierten viktorianischen Markthalle. Lass es dir schmecken!",
+    total:'Gesamtbeute der Mission: <span>£120</span> 🪙',
+    "lvl-kicker":"ABENTEUER-STATIONEN","lvl-title":"🗺️ Deine 3 Level in Manchester",
+    "lvl-sub":"Schließe jedes Level ab und werde zum Dreisprachigen Helden. Möge das Spiel beginnen!",
+    n1:"LEVEL 1",t1:"Das Labor des verrückten Wissenschaftlers",
+    p1:"Geh in den <strong>Experiment</strong>-Raum. Heb mit einer Hand ein Auto mit Flaschenzügen und spiel mit Elektrizität.",
+    m1:"🎯 Mission: etwas Riesiges mit reiner Physik bewegen.",
+    n2:"LEVEL 2",t2:"Die Herausforderung der Schwerkraft und Spiegel",
+    p2:"Decken, die Böden sind, schrumpfende Zimmer und unmögliche Spiegel.",
+    m2:"🎯 Mission: ein Foto, auf dem du an der Decke läufst.",
+    n3:"LEVEL 3",t3:"Winter mitten im Juli",
+    p3:"Tausch die Shorts gegen Schneekleidung und rutsch die längste echte Schneepiste Großbritanniens hinunter.",
+    m3:"🎯 Mission: mit den Riesen-Reifen (Tubing) runterfahren, ohne zu schreien … oder doch schreiend.",
+    "foot-h":"Möge das Abenteuer beginnen, Massimo! 💛",
+    "foot-p":"Ein dreisprachiger Held, der Musik und Fußball liebt, verdient ein Abenteuer, das zu ihm passt. Manchester wartet auf dich. ⚽🎸",
+    "foot-sign":"Mit ganz viel Liebe, Nana 💜",
+    scratch:"🪙 HIER RUBBELN"
+  }
+};
+
+let LANG = "es";
+
+function setLang(lang){
+  LANG = lang;
+  const d = I18N[lang];
+  document.documentElement.lang = lang;
+  document.title = d.title;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.getAttribute("data-i18n");
+    if(d[k]!=null) el.innerHTML = d[k];
+  });
+  document.getElementById("btn-es").setAttribute("aria-pressed", lang==="es");
+  document.getElementById("btn-de").setAttribute("aria-pressed", lang==="de");
+  scratchers.forEach(s=>{ if(!s.revealed) s.repaint(); });
+}
+
+/* ====================================================
+   COUNTDOWN  — target: 10 julio 2026, medianoche Chile
+   ==================================================== */
+const TARGET = new Date("2026-07-10T00:00:00-04:00");
+
+function renderCountdown(){
+  const display = document.getElementById("cd-display");
+  const d = I18N[LANG];
+  const now = new Date();
+  const diff = TARGET - now;
+  if(diff <= 0){
+    display.innerHTML = `<p class="cd-done">${d["cd-done"]}</p>`;
+    return;
+  }
+  const days  = Math.floor(diff / 864e5);
+  const hours = Math.floor((diff % 864e5) / 36e5);
+  const mins  = Math.floor((diff % 36e5)  / 6e4);
+  const secs  = Math.floor((diff % 6e4)   / 1e3);
+  display.innerHTML = `
+    <div class="cd-grid">
+      ${[
+        [days,  d["cd-days"]],
+        [hours, d["cd-hours"]],
+        [mins,  d["cd-min"]],
+        [secs,  d["cd-sec"]]
+      ].map(([n,u])=>`
+        <div class="cd-block">
+          <span class="num">${String(n).padStart(2,"0")}</span>
+          <span class="unit">${u}</span>
+        </div>`).join("")}
+    </div>`;
+}
+renderCountdown();
+setInterval(renderCountdown, 1000);
+
+/* ====================================================
+   CONFETTI
+   ==================================================== */
+const confCanvas = document.getElementById("confetti-canvas");
+const confCtx    = confCanvas.getContext("2d");
+let confPieces   = [];
+let confAnimId   = null;
+const COLORS = ["#FFC93C","#FF2D7E","#1B9AED","#2FD08A","#C8442A","#fff","#8B5CF6"];
+
+function launchConfetti(){
+  confCanvas.style.display = "block";
+  confCanvas.width  = window.innerWidth;
+  confCanvas.height = window.innerHeight;
+  confPieces = Array.from({length:160}, ()=>({
+    x: Math.random()*confCanvas.width,
+    y: Math.random()*confCanvas.height - confCanvas.height,
+    w: 8 + Math.random()*8,
+    h: 5 + Math.random()*5,
+    color: COLORS[Math.floor(Math.random()*COLORS.length)],
+    rot: Math.random()*360,
+    vx: (Math.random()-0.5)*4,
+    vy: 2 + Math.random()*4,
+    vr: (Math.random()-0.5)*6
+  }));
+  if(confAnimId) cancelAnimationFrame(confAnimId);
+  animConf();
+  setTimeout(stopConfetti, 5000);
+}
+
+function animConf(){
+  confCtx.clearRect(0,0,confCanvas.width,confCanvas.height);
+  let alive = false;
+  confPieces.forEach(p=>{
+    p.x  += p.vx; p.y += p.vy; p.rot += p.vr;
+    if(p.y < confCanvas.height + 20) alive = true;
+    confCtx.save();
+    confCtx.translate(p.x, p.y);
+    confCtx.rotate(p.rot * Math.PI/180);
+    confCtx.fillStyle = p.color;
+    confCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    confCtx.restore();
+  });
+  if(alive) confAnimId = requestAnimationFrame(animConf);
+  else stopConfetti();
+}
+
+function stopConfetti(){
+  cancelAnimationFrame(confAnimId);
+  confCtx.clearRect(0,0,confCanvas.width,confCanvas.height);
+  confCanvas.style.display = "none";
+}
+
+/* ====================================================
+   TARJETAS DE RASPAR
+   ==================================================== */
+const scratchers = [];
+let revealedCount = 0;
+
+document.querySelectorAll(".scratch-zone").forEach(zone=>{
+  const canvas = document.createElement("canvas");
+  zone.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+  const state = {revealed:false};
+
+  function paint(){
+    const r   = zone.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width  = r.width  * dpr;
+    canvas.height = r.height * dpr;
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(dpr, dpr);
+    ctx.globalCompositeOperation = "source-over";
+    const g = ctx.createLinearGradient(0,0,r.width,r.height);
+    g.addColorStop(0,"#b9b9c4"); g.addColorStop(.5,"#e8e8ef"); g.addColorStop(1,"#9a9aa8");
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,r.width,r.height);
+    ctx.fillStyle = "#15152A";
+    ctx.font = "900 16px Nunito,sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(I18N[LANG].scratch, r.width/2, r.height/2 + 5);
+    ctx.globalCompositeOperation = "destination-out";
+  }
+  state.repaint = paint;
+  paint();
+  window.addEventListener("resize", ()=>{ if(!state.revealed) paint(); });
+
+  let drawing = false;
+  function getPos(e){
+    const r = canvas.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    return {x: p.clientX-r.left, y: p.clientY-r.top};
+  }
+  function scratch(e){
+    if(!drawing) return;
+    const {x,y} = getPos(e);
+    ctx.beginPath(); ctx.arc(x,y,20,0,Math.PI*2); ctx.fill();
+    checkProgress();
+  }
+  function checkProgress(){
+    const img = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+    let clear=0, total=0;
+    for(let i=3; i<img.length; i+=4*80){ total++; if(img[i]===0) clear++; }
+    if(total > 0 && clear/total > 0.45) reveal();
+  }
+  function reveal(){
+    if(state.revealed) return;
+    state.revealed = true;
+    zone.closest(".card").classList.add("scratched");
+    canvas.style.transition = "opacity .4s ease";
+    canvas.style.opacity = 0;
+    setTimeout(()=>canvas.remove(), 420);
+    revealedCount++;
+    if(revealedCount >= 3) setTimeout(launchConfetti, 500);
+  }
+
+  canvas.addEventListener("mousedown",  e=>{drawing=true; scratch(e);});
+  canvas.addEventListener("mousemove",  scratch);
+  window.addEventListener("mouseup",    ()=>drawing=false);
+  canvas.addEventListener("touchstart", e=>{drawing=true; scratch(e); e.preventDefault();},{passive:false});
+  canvas.addEventListener("touchmove",  e=>{scratch(e); e.preventDefault();},{passive:false});
+  canvas.addEventListener("touchend",   ()=>drawing=false);
+  zone.closest(".card").querySelector(".reveal-btn").addEventListener("click", reveal);
+  scratchers.push(state);
+});
+</script>
 </body>
 </html>
