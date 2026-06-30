@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños! Misión Manchester</title>
+    <style>
+        :root {
+            --manc-yellow: #FFC107;
+            --manc-dark: #1A1A1A;
+            --manc-brick: #E64A19;
+            --manc-blue: #29B6F6;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--manc-dark);
+            color: #FFFFFF;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: linear-gradient(135deg, #2A2A2A 0%, #111111 100%);
+            border: 4px solid var(--manc-yellow);
+            border-radius: 20px;
+            max-width: 450px;
+            width: 100%;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .bee-badge {
+            font-size: 40px;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        h1 {
+            color: var(--manc-yellow);
+            margin: 10px 0;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .flags {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .intro {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #E0E0E0;
+            margin-bottom: 25px;
+        }
+        .mission-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--manc-blue);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .mission-box:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+        .mission-title {
+            font-weight: bold;
+            color: var(--manc-yellow);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .mission-details {
+            display: none;
+            font-size: 14px;
+            color: #B0B0B0;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+        .active .mission-details {
+            display: block;
+        }
+        .footer-note {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #888;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="bee-badge">🐝🎧🎸</div>
+    <h1>¡Feliz Cumpleaños!</h1>
+    <div class="flags">🇨🇱 ➔ 🇩🇪 ➔ 🇬🇧</div>
+    
+    <p class="intro">
+        ¡Tu regalo de cumpleaños es una aventura musical y de exploración este verano en Mánchester! Tienes <strong>£120 libras</strong> para completar estas misiones con tus papás. 
+        <br><br>
+        👇 <em>Toca cada nivel para desbloquear la misión secreta:</em>
+    </p>
+
+    <!-- NIVEL 1 -->
+    <div class="mission-box" onclick="toggleMission(this)">
+        <div class="mission-title">
+            <span>🛍️ Nivel 1: Cacería de Chinches</span>
+            <span>£40</span>
+        </div>
+        <div class="mission-details">
+            <strong>Lugar: Afflecks Palace.</strong> <br>
+            Explora los 4 pisos de esta fortaleza alternativa. Tu misión es gastar estas libras en stickers de bandas, pines de la abeja obrera, parches para tu mochila o juguetes retro.
+        </div>
+    </div>
+
+    <!-- NIVEL 2 -->
+    <div class="mission-box" onclick="toggleMission(this)">
+        <div class="mission-title">
+            <span>💿 Nivel 2: Tu Primer Vinilo</span>
+            <span>£25</span>
+        </div>
+        <div class="mission-details">
+            <strong>Lugar: Piccadilly Records.</strong> <br>
+            Entra a la disquería más cool de la ciudad. Busca entre los estantes y elige el disco que tenga la portada más increíble para llevarlo de trofeo a tu pieza.
+        </div>
+    </div>
+
+    <!-- NIVEL 3 -->
+    <div class="mission-box" onclick="toggleMission(this)">
+        <div class="mission-title">
+            <span>🍔 Nivel 3: El Banquete Rockero</span>
+            <span>£55</span>
+        </div>
+        <div class="mission-details">
+            <strong>Lugar: Mackie Mayor / Hard Rock Cafe.</strong> <br>
+            Invita a tus papás a comer unas buenas hamburguesas bajo el techo de vidrio gigante de Mackie Mayor para recargar energías con buena música de fondo.
+        </div>
+    </div>
+
+    <!-- NIVEL EXTRA -->
+    <div class="mission-box" style="border-left-color: var(--manc-brick);" onclick="toggleMission(this)">
+        <div class="mission-title">
+            <span>🚀 Estaciones de Aventura Extra</span>
+            <span>✨</span>
+        </div>
+        <div class="mission-details">
+            Si yo viajara con ustedes, iríamos directo a desafiar la ciencia en el <strong>Science and Industry Museum</strong>, a caminar por el techo en el <strong>Museum of Illusions</strong> y a lanzarnos en donas gigantes en la nieve real de <strong>Chill Factore</strong>. ¡No dejes de ir con tus papás!
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Escucha la playlist oficial en Spotify que preparé para tus caminatas de julio. <br>
+        <strong>¡Te ama, tu tía! ❤️</strong>
+    </div>
+</div>
+
+<script>
+    function toggleMission(element) {
+        element.classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>
